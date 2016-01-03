@@ -5,5 +5,6 @@ reference- http://www.w3schools.com/tags/att_input_required.asp
 
 Here is javascript library that will use browsers form-validation to validate require attribute.
 include following line into html page safari compatability for require attribute
+
 &lt;script type="text/javascript" src="form-validation-require-for-safari.js" /&gt;
 
