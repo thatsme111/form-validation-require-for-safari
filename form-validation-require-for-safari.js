@@ -5,7 +5,7 @@ addEventListener("DOMContentLoaded", function(){
 				var form = e.srcElement;
 
 				for(var i=0; i<form.elements.length; i++){
-					if(form.elements[i].getAttribute('required') !== null){
+					if(form.elements[i].getAttribute('must') !== null){
 						if (form.elements[i].value == null || form.elements[i].value == ""){
 							var parentDiv = document.createElement('div');
 
