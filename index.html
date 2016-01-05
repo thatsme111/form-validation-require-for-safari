@@ -1,0 +1,23 @@
+<html>
+<head>
+<title>HTML5 required</title>
+<script type="text/javascript" src="form-validation-require-for-safari.js"></script>
+</head>
+<body>
+	<form action="test.php">
+		<legend>HTML 5 Required</legend>
+		First Name:<input type="text" id="firstname" required><br>
+		Last Name:<input type="email" id="lastname" ><br>
+		Password:<input type="password" disabled><br>
+		<input type="submit" value="Submit">
+	</form>
+	
+<script type="text/javascript">
+	var element = document.forms[0].elements[0];
+	console.log(element);
+	element.setCustomValidity("some custom message");
+	console.log(element.validationMessage);
+</script>
+
+</body>
+</html>
