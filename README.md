@@ -5,6 +5,6 @@ reference- http://www.w3schools.com/tags/att_input_required.asp<br>
 
 required attribute of form element is newly added in HTML5. This javascript library will use browsers FormValidation API to validate require attribute.<br>
 
-Include following line into html page safari compatability for require attribute
+Include following line into html page safari compatability for require attribute<br>
 &lt;script type="text/javascript" src="form-validation-require-for-safari.js" /&gt;
 
