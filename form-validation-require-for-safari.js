@@ -24,17 +24,17 @@ addEventListener("DOMContentLoaded", function(){
 
 				//triangle div for corner triangle
 				var triangleDiv = document.createElement('div');
-				triangleDiv.setAttribute('style', " margin-left:10px;  transition: .3s;    border-style: solid;    width: 0px;    height: 0px;    line-height: 0px;    border-width: 0px 10px 10px 10px;    border-color: transparent transparent #000 transparent;");
+				triangleDiv.setAttribute('style', "margin-left:10px;  transition: .3s;    border-style: solid;    width: 0px;    height: 0px;    line-height: 0px;    border-width: 0px 10px 10px 10px;    border-color: transparent transparent #000 transparent;");
 
 				//main message pane div
 				var messageDiv = document.createElement('div');
-				messageDiv.setAttribute('style', "color:#000; moz-box-shadow: 3px 3px 5px #535353; -webkit-box-shadow: 3px 3px 5px #535353;         box-shadow: 3px 3px 5px #535353; -moz-border-radius: 10px 10px 10px 10px; -webkit-border-radius: 10px; border-radius:10px 10px 10px 10px; border: 2px solid #000; background: #FFF; padding: 10px;");
+				messageDiv.setAttribute('style', "min-width:50px; word-wrap: break-word; color:#000; moz-box-shadow: 3px 3px 5px #535353; -webkit-box-shadow: 3px 3px 5px #535353;         box-shadow: 3px 3px 5px #535353; -moz-border-radius: 10px 10px 10px 10px; -webkit-border-radius: 10px; border-radius:10px 10px 10px 10px; border: 2px solid #000; background: #FFF; padding: 10px;");
 				messageDiv.innerHTML = element.validationMessage;
 
 				//positions for parent div
 				var posX = element.offsetTop + element.offsetHeight - 10;
 				var posY = element.offsetWidth;
-				parentDiv.setAttribute("style", " position: absolute; top:"+posX+"px; left:"+posY+"px; z-index: 1000;");
+				parentDiv.setAttribute("style", "max-width:250px; position: absolute; top:"+posX+"px; left:"+posY+"px; z-index: 1000;");
 
 				//add both triangle and message pane div to parent div
 				parentDiv.appendChild(triangleDiv);
