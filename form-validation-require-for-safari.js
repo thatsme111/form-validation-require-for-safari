@@ -13,8 +13,13 @@ addEventListener("DOMContentLoaded", function(){
 				1.2.0 safari has element.validity object, removing it
 			*/
 			this.version = "1.2.0";
+
 			//add support for date picker
 			this.validInputTypes = ["text", "email", "number", "url", "tel", "search", "password", "checkbox", "radio", "file"];
+
+			//customizable css styling
+			this.background = "#1496bb";
+			this.color = "#FFFFFF";
 
 			this.displayMessage = function(element){
 				console.log(element.validationMessage);
@@ -24,11 +29,11 @@ addEventListener("DOMContentLoaded", function(){
 
 				//triangle div for corner triangle
 				var triangleDiv = document.createElement('div');
-				triangleDiv.setAttribute('style', "margin-left:10px;  transition: .3s;    border-style: solid;    width: 0px;    height: 0px;    line-height: 0px;    border-width: 0px 10px 10px 10px;    border-color: transparent transparent #000 transparent;");
+				triangleDiv.setAttribute('style', "margin-left:10px;  transition: .3s;    border-style: solid;    width: 0px;    height: 0px;    line-height: 0px;    border-width: 0px 10px 10px 10px;    border-color: transparent transparent "+this.background+" transparent;");
 
 				//main message pane div
 				var messageDiv = document.createElement('div');
-				messageDiv.setAttribute('style', "min-width:50px; word-wrap: break-word; color:#000; moz-box-shadow: 3px 3px 5px #535353; -webkit-box-shadow: 3px 3px 5px #535353;         box-shadow: 3px 3px 5px #535353; -moz-border-radius: 10px 10px 10px 10px; -webkit-border-radius: 10px; border-radius:10px 10px 10px 10px; border: 2px solid #000; background: #FFF; padding: 10px;");
+				messageDiv.setAttribute('style', "min-width:50px; word-wrap: break-word; color:"+this.color+"; moz-box-shadow: 3px 3px 5px #535353; -webkit-box-shadow: 3px 3px 5px #535353;         box-shadow: 3px 3px 5px #535353; -moz-border-radius: 10px 10px 10px 10px; -webkit-border-radius: 10px; border-radius:10px 10px 10px 10px; /*border: 2px solid #000;*/ background: "+this.background+"; padding: 10px;");
 				messageDiv.innerHTML = element.validationMessage;
 
 				//positions for parent div
