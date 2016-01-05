@@ -18,8 +18,8 @@ addEventListener("DOMContentLoaded", function(){
 			this.validInputTypes = ["text", "email", "number", "url", "tel", "search", "password", "checkbox", "radio", "file"];
 
 			//customizable css styling
-			this.background = "#1496bb";
-			this.color = "#FFFFFF";
+			this.background = "#000";
+			this.color = "#FFF";
 
 			this.displayMessage = function(element){
 				console.log(element.validationMessage);
