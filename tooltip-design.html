@@ -1,0 +1,48 @@
+<html>
+<head>
+	<title>HTML5 required</title>
+	<style type="text/css">
+		.parent{
+			max-width:250px; 
+			position: absolute; 
+			top:"+posX+"px; 
+			left:"+posY+"px; 
+			z-index: 1000;
+		}
+
+		.message{
+			min-width:50px; 
+			word-wrap: break-word; 
+			color:#000; 
+			moz-box-shadow: 3px 3px 5px #535353; 
+			-webkit-box-shadow: 3px 3px 5px #535353;         
+			box-shadow: 3px 3px 5px #535353; 
+			-moz-border-radius: 10px 10px 10px 10px; 
+			-webkit-border-radius: 10px; 
+			border-radius:10px 10px 10px 10px; 
+			border: 2px solid #000; 
+			background: #FFF; 
+			padding: 10px;
+		}
+
+		.triangle{
+			margin-left:10px;
+			transition: .3s;    
+			border-style: solid;    
+			width: 0px;    
+			height: 0px;    
+			line-height: 0px;    
+			border-width: 0px 10px 10px 10px;    
+			border-color: transparent transparent #000 transparent;
+		}
+	</style>
+</head>
+<body>
+
+	<div class="parent">
+		<div class="triangle"></div>
+		<div class="message">Some custom message</div>
+	</div>
+
+</body>
+</html>
