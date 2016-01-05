@@ -1,10 +1,10 @@
-# form-validation-require-for-safari
+# FormValidation API for safari
 
-HTML 5 form validation, require attribute is not supported in safari <br>
-reference- http://www.w3schools.com/tags/att_input_required.asp
+Safari DOSE NOT support required attribute of form element (FormValidation API)<br>
+reference- http://www.w3schools.com/tags/att_input_required.asp<br>
 
-Here is javascript library that will use browsers form-validation to validate require attribute.
-include following line into html page safari compatability for require attribute
+required attribute of form element is newly added in HTML5. This javascript library will use browsers FormValidation API to validate require attribute.<br>
 
+Include following line into html page safari compatability for require attribute<br>
 &lt;script type="text/javascript" src="form-validation-require-for-safari.js" /&gt;
 
