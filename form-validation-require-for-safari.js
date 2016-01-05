@@ -1,41 +1,83 @@
+/*
+	on document content loaded event add listener for form submit event
+	on submit check for elements having required attribute and perform validation
+*/
 addEventListener("DOMContentLoaded", function(){
-	if(navigator.vendor.toLowerCase().indexOf('apple') !== -1){
-		for(var i=0; i<document.forms.length; i++){
-			document.forms[i].addEventListener("submit", function(e){
-				var form = e.srcElement;
+	//ensure its safari then apply validation algorithm
+	if(navigator.vendor.toLowerCase().indexOf('apple') != -1){
 
-				for(var i=0; i<form.elements.length; i++){
-					if(form.elements[i].getAttribute('must') !== null){
-						if (form.elements[i].value == null || form.elements[i].value == ""){
-							var parentDiv = document.createElement('div');
+		window.FormValidation = new (function(){
+			/*
+				1.0.0 scan all forms and add submit listner and check for required attr and display message if empty
+				1.1.0 added element.validity and validityState objects
+				1.2.0 safari has element.validity object, removing it
+			*/
+			this.version = "1.2.0";
+			//add support for date picker
+			this.validInputTypes = ["text", "email", "number", "url", "tel", "search", "password", "checkbox", "radio", "file"];
 
-							var triangleDiv = document.createElement('div');
-							triangleDiv.setAttribute('style', " margin-left:10px;  transition: .3s;    border-style: solid;    width: 0px;    height: 0px;    line-height: 0px;    border-width: 0px 10px 10px 10px;    border-color: transparent transparent #000 transparent;");
+			this.displayMessage = function(element){
+				console.log(element.validationMessage);
 
-							var messageDiv = document.createElement('div');
-							messageDiv.setAttribute('style', "color:#000; moz-box-shadow: 3px 3px 5px #535353; -webkit-box-shadow: 3px 3px 5px #535353;         box-shadow: 3px 3px 5px #535353; -moz-border-radius: 10px 10px 10px 10px; -webkit-border-radius: 10px; border-radius:10px 10px 10px 10px; border: 2px solid #000; background: #FFF; padding: 10px;");
-							messageDiv.innerHTML = " Please fill out this field. ";
+				//main div which contains two div one message pane and another triangle
+				var parentDiv = document.createElement('div');
 
-							var posX = form.elements[i].offsetTop + form.elements[i].offsetHeight - 10;
-							var posY = form.elements[i].offsetWidth;
-							parentDiv.setAttribute("style", " position: absolute; top:"+posX+"px; left:"+posY+"px; z-index: 1000;");
+				//triangle div for corner triangle
+				var triangleDiv = document.createElement('div');
+				triangleDiv.setAttribute('style', " margin-left:10px;  transition: .3s;    border-style: solid;    width: 0px;    height: 0px;    line-height: 0px;    border-width: 0px 10px 10px 10px;    border-color: transparent transparent #000 transparent;");
 
-							parentDiv.appendChild(triangleDiv);
-							parentDiv.appendChild(messageDiv);
+				//main message pane div
+				var messageDiv = document.createElement('div');
+				messageDiv.setAttribute('style', "color:#000; moz-box-shadow: 3px 3px 5px #535353; -webkit-box-shadow: 3px 3px 5px #535353;         box-shadow: 3px 3px 5px #535353; -moz-border-radius: 10px 10px 10px 10px; -webkit-border-radius: 10px; border-radius:10px 10px 10px 10px; border: 2px solid #000; background: #FFF; padding: 10px;");
+				messageDiv.innerHTML = element.validationMessage;
 
-							var child = document.body.appendChild(parentDiv);
-							var removeChildDiv = function(){
-								document.body.removeChild(child);
-								form.elements[i].removeEventListener('input', removeChildDiv);
-							}
+				//positions for parent div
+				var posX = element.offsetTop + element.offsetHeight - 10;
+				var posY = element.offsetWidth;
+				parentDiv.setAttribute("style", " position: absolute; top:"+posX+"px; left:"+posY+"px; z-index: 1000;");
 
-							form.elements[i].addEventListener('input', removeChildDiv);
-							e.preventDefault();										
-							break;
-						}
+				//add both triangle and message pane div to parent div
+				parentDiv.appendChild(triangleDiv);
+				parentDiv.appendChild(messageDiv);
+
+				//node that is appended to body
+				var child = document.body.appendChild(parentDiv);
+				element.focus();
+				child.validityMessageDisplay = true;
+
+				//function to remove child if already appended to body
+				var removeChildDiv = function(){
+					if(child.validityMessageDisplay == true){
+						document.body.removeChild(child);
+						element.removeEventListener('input', removeChildDiv);	
+						child.validityMessageDisplay = false;						
 					}
 				}
-			});
-		}
+
+				//event listeners after which child should be removed
+				element.addEventListener('input', removeChildDiv);
+				element.addEventListener('blur', removeChildDiv);
+			}
+
+			this.initialize = function(){
+				//refernce for main formValidation object 
+				var that = this;
+				//add submit listener to all forms
+				for(var i=0; i<document.forms.length; i++){
+					document.forms[i].addEventListener("submit", function(event){				
+						var form = event.srcElement;
+						for(index=0; index<form.elements.length; index++){
+							var element = form.elements[index];
+							if(element.willValidate == true && element.validity.valid == false){	
+								event.preventDefault();
+								that.displayMessage(element);
+								break;			
+							}
+						}
+					});
+				}
+			};	//end of inilialize
+			this.initialize();
+		})();
 	}
 });
