@@ -64,8 +64,8 @@ addEventListener("DOMContentLoaded", function(){
 				var messageDiv = document.createElement('div');
 				messageDiv.setAttribute('style', "min-width:50px; word-wrap: break-word; color:"+this.color+"; moz-box-shadow: 3px 3px 5px #535353; -webkit-box-shadow: 3px 3px 5px #535353;         box-shadow: 3px 3px 5px #535353; -moz-border-radius: 10px 10px 10px 10px; -webkit-border-radius: 10px; border-radius:10px 10px 10px 10px; /*border: 2px solid #000;*/ background: "+this.background+"; padding: 10px;");
 				messageDiv.innerHTML = this.generateValidationMessage(element);
+
 				//add title message
-				
 				if(element.title.length != 0)
 					messageDiv.innerHTML += "<div style=''>:"+element.title+"</div>";
 
@@ -102,8 +102,10 @@ addEventListener("DOMContentLoaded", function(){
 				var that = this;
 				//add submit listener to all forms
 				for(var i=0; i<document.forms.length; i++){
-					document.forms[i].addEventListener("submit", function(event){				
-						var form = event.srcElement; 
+					document.forms[i].addEventListener("submit", function(event){
+						var form = event.srcElement;
+						if(form.noValidate)
+							return;
 						for(index=0; index<form.elements.length; index++){
 							var element = form.elements[index];
 							//instead of willValidate check for required attr
