@@ -102,8 +102,10 @@ addEventListener("DOMContentLoaded", function(){
 				var that = this;
 				//add submit listener to all forms
 				for(var i=0; i<document.forms.length; i++){
-					document.forms[i].addEventListener("submit", function(event){				
-						var form = event.srcElement; 
+					document.forms[i].addEventListener("submit", function(event){
+						var form = event.srcElement;
+						if(form.noValidate)
+							return;
 						for(index=0; index<form.elements.length; index++){
 							var element = form.elements[index];
 							//instead of willValidate check for required attr
