@@ -64,7 +64,10 @@ addEventListener("DOMContentLoaded", function(){
 				var messageDiv = document.createElement('div');
 				messageDiv.setAttribute('style', "min-width:50px; word-wrap: break-word; color:"+this.color+"; moz-box-shadow: 3px 3px 5px #535353; -webkit-box-shadow: 3px 3px 5px #535353;         box-shadow: 3px 3px 5px #535353; -moz-border-radius: 10px 10px 10px 10px; -webkit-border-radius: 10px; border-radius:10px 10px 10px 10px; /*border: 2px solid #000;*/ background: "+this.background+"; padding: 10px;");
 				messageDiv.innerHTML = this.generateValidationMessage(element);
-				console.log(element.validity);
+				//add title message
+				
+				if(element.title.length != 0)
+					messageDiv.innerHTML += "<div style=''>:"+element.title+"</div>";
 
 				//positions for parent div
 				var posX = element.offsetTop + element.offsetHeight - 10;

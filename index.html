@@ -1,0 +1,28 @@
+<html>
+<head>
+<title>HTML5 required</title>
+<script type="text/javascript" src="form-validation-require-for-safari.js"></script>
+</head>
+<body>
+	<form action="test.php">
+		<legend>HTML 5 Required</legend>
+		maxlength: <input type="text" maxlength="3" title="title" value="asasasas" required><br>
+		typemismatch:<input id="bar" type="email" value="foo" required/><br>
+		Step:<input id="bar" type="number" step="2" required /> <br>
+		Pattern:<input type="text" pattern="[A-Za-z]{3}" title="Three letter country code" required><br>
+		Text:<input type="text" title="some title text" required><br>
+		Eamil:<input type="email" value="something@something.com" required><br>
+		Number:<input type="number" min="1" max="9" required><br>
+		Password:<input type="password" disabled><br>
+
+		<input type="submit" value="Submit">
+	</form>
+	
+<script type="text/javascript">
+	var element = document.forms[0].elements[0];
+	element.setCustomValidity("some custom message");
+	element.setCustomValidity("");
+</script>
+
+</body>
+</html>
