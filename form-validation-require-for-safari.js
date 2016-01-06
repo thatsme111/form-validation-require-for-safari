@@ -11,25 +11,60 @@ addEventListener("DOMContentLoaded", function(){
 				1.0.0 scan all forms and add submit listner and check for required attr and display message if empty
 				1.1.0 added element.validity and validityState objects
 				1.2.0 safari has element.validity object, removing it
+				1.2.1 tooltip coloring customization added
+				1.2.2 specific custom message generation method added 
+				1.3.0 added validation of all properties of validityState
 			*/
-			this.version = "1.2.0";
+			this.version = "1.3.0";
+
 			//add support for date picker
 			this.validInputTypes = ["text", "email", "number", "url", "tel", "search", "password", "checkbox", "radio", "file"];
 
-			this.displayMessage = function(element){
-				console.log(element.validationMessage);
+			//customizable css styling
+			this.background = "#000";
+			this.color = "#FFF";
 
+			//specific custom message genration added
+			this.generateValidationMessage = function(element){
+				if(element.validity.patternMismatch)
+					return "Please Match the requested format";
+				if(element.validity.rangeOverflow)
+					return "Value must be less than or equal to "+element.max;
+				if(element.validity.rangeUnderflow)
+					return "Value must be greater than or equal to "+element.min;
+				if(element.validity.stepMismatch){
+					var val = parseInt(element.value);
+					var step = parseInt(element.step);
+					var prev = val - (val%step);
+					var next = prev + step;
+					return "Please enter valid value. valid values are "+prev+" and "+next;
+				}
+				//if(element.validity.tooLong){
+				if(parseInt(element.value.length) > parseInt(element.maxLength)){
+					return "Please shorten this text to "+element.maxLength+" character or less (you are currently using "+element.value.length+" characters)";
+				}
+				if(element.validity.typeMismatch){
+					return "Please enter valid "+element.type;
+				}	
+				if(element.validity.valueMissing)
+					return "Please fill out this field";
+				// console.log(element.max);
+				return element.validationMessage;
+			};
+
+			this.displayMessage = function(element){
 				//main div which contains two div one message pane and another triangle
 				var parentDiv = document.createElement('div');
 
 				//triangle div for corner triangle
 				var triangleDiv = document.createElement('div');
-				triangleDiv.setAttribute('style', "margin-left:10px;  transition: .3s;    border-style: solid;    width: 0px;    height: 0px;    line-height: 0px;    border-width: 0px 10px 10px 10px;    border-color: transparent transparent #000 transparent;");
+				triangleDiv.setAttribute('style', "margin-left:10px;  transition: .3s;    border-style: solid;    width: 0px;    height: 0px;    line-height: 0px;    border-width: 0px 10px 10px 10px;    border-color: transparent transparent "+this.background+" transparent;");
 
 				//main message pane div
 				var messageDiv = document.createElement('div');
-				messageDiv.setAttribute('style', "min-width:50px; word-wrap: break-word; color:#000; moz-box-shadow: 3px 3px 5px #535353; -webkit-box-shadow: 3px 3px 5px #535353;         box-shadow: 3px 3px 5px #535353; -moz-border-radius: 10px 10px 10px 10px; -webkit-border-radius: 10px; border-radius:10px 10px 10px 10px; border: 2px solid #000; background: #FFF; padding: 10px;");
-				messageDiv.innerHTML = element.validationMessage;
+				messageDiv.setAttribute('style', "min-width:50px; word-wrap: break-word; color:"+this.color+"; moz-box-shadow: 3px 3px 5px #535353; -webkit-box-shadow: 3px 3px 5px #535353;         box-shadow: 3px 3px 5px #535353; -moz-border-radius: 10px 10px 10px 10px; -webkit-border-radius: 10px; border-radius:10px 10px 10px 10px; /*border: 2px solid #000;*/ background: "+this.background+"; padding: 10px;");
+				messageDiv.innerHTML = this.generateValidationMessage(element);
+				console.log(element.validity);
 
 				//positions for parent div
 				var posX = element.offsetTop + element.offsetHeight - 10;
@@ -65,10 +100,12 @@ addEventListener("DOMContentLoaded", function(){
 				//add submit listener to all forms
 				for(var i=0; i<document.forms.length; i++){
 					document.forms[i].addEventListener("submit", function(event){				
-						var form = event.srcElement;
+						var form = event.srcElement; 
 						for(index=0; index<form.elements.length; index++){
 							var element = form.elements[index];
-							if(element.willValidate == true && element.validity.valid == false){	
+							//instead of willValidate check for required attr
+							if(element.willValidate == true && element.validity.valid == false ){	
+							// if(element.getAttribute("required") != null){
 								event.preventDefault();
 								that.displayMessage(element);
 								break;			
