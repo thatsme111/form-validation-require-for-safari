@@ -14,6 +14,7 @@ addEventListener("DOMContentLoaded", function(){
 				1.2.1 tooltip coloring customization added
 				1.2.2 specific custom message generation method added 
 				1.3.0 added validation of all properties of validityState
+				1.3.1 added novalidation support
 			*/
 			this.version = "1.3.0";
 
