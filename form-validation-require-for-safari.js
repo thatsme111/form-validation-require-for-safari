@@ -13,8 +13,9 @@ addEventListener("DOMContentLoaded", function(){
 				1.2.0 safari has element.validity object, removing it
 				1.2.1 tooltip coloring customization added
 				1.2.2 specific custom message generation method added 
+				1.3.0 added validation of all properties of validityState
 			*/
-			this.version = "1.2.0";
+			this.version = "1.3.0";
 
 			//add support for date picker
 			this.validInputTypes = ["text", "email", "number", "url", "tel", "search", "password", "checkbox", "radio", "file"];
