@@ -17,7 +17,7 @@ addEventListener("DOMContentLoaded", function(){
 				1.3.1 added novalidation support
 				1.3.2 added minLength and tooShort support
 			*/
-			this.version = "1.3.0";
+			this.version = "1.3.2";
 
 			//add support for date picker
 			this.validInputTypes = ["text", "email", "number", "url", "tel", "search", "password", "checkbox", "radio", "file"];
@@ -26,9 +26,8 @@ addEventListener("DOMContentLoaded", function(){
 			this.background = "#000";
 			this.color = "#FFF";
 
-			//specific custom message genration added
+			//specific custom message genration
 			this.generateValidationMessage = function(element){
-				console.log("minLength:"+element.validity.tooShort);
 				if(element.validity.patternMismatch)
 					return "Please Match the requested format";
 				if(element.validity.rangeOverflow)
@@ -54,7 +53,6 @@ addEventListener("DOMContentLoaded", function(){
 				}	
 				if(element.validity.valueMissing)
 					return "Please fill out this field";
-				// console.log(element.max);
 				return element.validationMessage;
 			};
 
@@ -106,6 +104,7 @@ addEventListener("DOMContentLoaded", function(){
 			this.initialize = function(){
 				//refernce for main formValidation object 
 				var that = this;
+
 				//add submit listener to all forms
 				for(var i=0; i<document.forms.length; i++){
 					document.forms[i].addEventListener("submit", function(event){
@@ -114,6 +113,7 @@ addEventListener("DOMContentLoaded", function(){
 							return;
 						for(index=0; index<form.elements.length; index++){
 							var element = form.elements[index];
+							
 							//added support for minlength attribute
 							if(element.getAttribute("minlength") != null){
 								element.minLength = parseInt(element.getAttribute("minlength"));
@@ -121,7 +121,6 @@ addEventListener("DOMContentLoaded", function(){
 									element.validity.tooShort = true;
 									element.validity.valid = false;
 								}
-								console.log(element.validity);
 							}
 							
 							//instead of willValidate check for required attr
