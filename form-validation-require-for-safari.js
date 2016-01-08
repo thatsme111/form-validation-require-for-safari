@@ -15,6 +15,7 @@ addEventListener("DOMContentLoaded", function(){
 				1.2.2 specific custom message generation method added 
 				1.3.0 added validation of all properties of validityState
 				1.3.1 added novalidation support
+				1.3.2 added minLength and tooShort support
 			*/
 			this.version = "1.3.0";
 
@@ -27,6 +28,7 @@ addEventListener("DOMContentLoaded", function(){
 
 			//specific custom message genration added
 			this.generateValidationMessage = function(element){
+				console.log("minLength:"+element.validity.tooShort);
 				if(element.validity.patternMismatch)
 					return "Please Match the requested format";
 				if(element.validity.rangeOverflow)
@@ -43,6 +45,9 @@ addEventListener("DOMContentLoaded", function(){
 				//if(element.validity.tooLong){
 				if(parseInt(element.value.length) > parseInt(element.maxLength)){
 					return "Please shorten this text to "+element.maxLength+" character or less (you are currently using "+element.value.length+" characters)";
+				}
+				if(element.validity.tooShort){
+					return "Please lengthen this text to "+element.minLength+" character or more (you are currently using "+element.value.length+" characters)";
 				}
 				if(element.validity.typeMismatch){
 					return "Please enter valid "+element.type;
@@ -68,7 +73,7 @@ addEventListener("DOMContentLoaded", function(){
 
 				//add title message
 				if(element.title.length != 0)
-					messageDiv.innerHTML += "<div style=''>:"+element.title+"</div>";
+					messageDiv.innerHTML += "<div style=''>"+element.title+"</div>";
 
 				//positions for parent div
 				var posX = element.offsetTop + element.offsetHeight - 10;
@@ -109,8 +114,19 @@ addEventListener("DOMContentLoaded", function(){
 							return;
 						for(index=0; index<form.elements.length; index++){
 							var element = form.elements[index];
+							//added support for minlength attribute
+							if(element.getAttribute("minlength") != null){
+								element.minLength = parseInt(element.getAttribute("minlength"));
+								if(parseInt(element.value.length) < parseInt(element.minLength)){
+									element.validity.tooShort = true;
+									element.validity.valid = false;
+								}
+								console.log(element.validity);
+							}
+							
 							//instead of willValidate check for required attr
-							if(element.willValidate == true && element.validity.valid == false ){	
+							if((element.willValidate == true && element.validity.valid == false)
+								|| (parseInt(element.value.length) < parseInt(element.minLength))){	
 							// if(element.getAttribute("required") != null){
 								event.preventDefault();
 								that.displayMessage(element);
